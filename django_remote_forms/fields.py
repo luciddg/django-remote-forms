@@ -1,5 +1,8 @@
 import datetime
-from collections import OrderedDict
+try:
+    from django.utils.datastructures import SortedDict
+except ImportError:
+    from collections import OrderedDict as SortedDict
 
 from django.conf import settings
 
@@ -24,7 +27,7 @@ class RemoteField(object):
         self.form_initial_data = form_initial_data
 
     def as_dict(self):
-        field_dict = OrderedDict()
+        field_dict = SortedDict()
         field_dict['title'] = self.field.__class__.__name__
         field_dict['required'] = self.field.required
         field_dict['label'] = self.field.label
