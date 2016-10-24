@@ -1,7 +1,10 @@
 import datetime
+try:
+    from django.utils.datastructures import SortedDict
+except ImportError:
+    from collections import OrderedDict as SortedDict
 
 from django.conf import settings
-from django.utils.datastructures import SortedDict
 
 from django_remote_forms import logger, widgets
 

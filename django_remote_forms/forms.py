@@ -1,5 +1,7 @@
-from django.utils.datastructures import SortedDict
-
+try: 
+    from django.utils.datastructures import SortedDict
+except ImportError:
+    from collections import OrderedDict as SortedDict
 from django_remote_forms import fields, logger
 from django_remote_forms.utils import resolve_promise
 
