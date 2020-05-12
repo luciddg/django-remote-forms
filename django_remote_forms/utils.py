@@ -1,9 +1,13 @@
+from django.http import QueryDict
 from django.utils.functional import Promise
 from django.utils.encoding import force_text
 
 
 def resolve_promise(o):
-    if isinstance(o, dict):
+    if isinstance(o, QueryDict):
+        for k, v in o.lists():
+            o[k] = resolve_promise(v)
+    elif isinstance(o, dict):
         for k, v in o.items():
             o[k] = resolve_promise(v)
     elif isinstance(o, (list, tuple)):
