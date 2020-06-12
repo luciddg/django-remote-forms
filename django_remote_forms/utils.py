@@ -5,8 +5,12 @@ from django.utils.encoding import force_text
 
 def resolve_promise(o):
     if isinstance(o, QueryDict):
+        mutable = o._mutable
+        if not mutable:
+          o._mutable = True
         for k, v in o.lists():
-            o[k] = resolve_promise(v)
+            o.setlist(k, resolve_promise(v))
+        o._mutable = mutable # set back to original
     elif isinstance(o, dict):
         for k, v in o.items():
             o[k] = resolve_promise(v)
